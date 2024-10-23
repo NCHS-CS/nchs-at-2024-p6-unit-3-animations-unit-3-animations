@@ -40,7 +40,7 @@ public class BallPanel extends AnimatedPanel {
      * Create the initial number of balls on our panel
      */
     private void createBalls() {
-        for (int count = 0; count < 4; count++) {
+        for (int count = 0; count < 40; count++) {
             addBall();
         }
     }
@@ -50,10 +50,12 @@ public class BallPanel extends AnimatedPanel {
      * Add the ball relatively high on the screen
      */
     public void addBall() {
-        // TODO: create a ball
-
-        // we add it to our list
-        // balls.add(ball);
+        int size = (int) (Math.random() * 10) + 50;
+        int x = (int) (Math.random() * (Main.WIDTH - size)) + size/2;
+        int y = (int) (Math.random() * (Main.HEIGHT/ 2));
+        
+        Ball ball = new Ball(x, y, size, FLOOR, getRandColor());
+        balls.add(ball);
     }
 
     private void addEventHandlers() {
@@ -81,7 +83,9 @@ public class BallPanel extends AnimatedPanel {
 
     public void moveBalls() {
         //System.out.println("move balls");
-        // TODO: Move all the balls
+        for (Ball ball: balls) {
+            ball.move();
+        }
     }
 
     // do NOT override paint(Graphics g).
@@ -106,7 +110,8 @@ public class BallPanel extends AnimatedPanel {
         // TODO: Use the Graphics object to clear the whole panel/canvas,
         // set the pen color, and draw our floor
 
-        // TODO: Draw stuff (such as all the balls)
-
+        for (Ball ball: balls) {
+            ball.draw(g);
+        }
     }
 }

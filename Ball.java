@@ -17,16 +17,26 @@ import java.awt.Graphics;
 */
 public class Ball {
 
-	// Add private instance fields here
+	private int x;
+    private int y;
+    private int size;
+    private int floor;
+    private Color color;
+    private int yVelocity;
 
     // Allow an external entity to change our global gravity
 	public static int gravity = -3;
-
+    
     /*
     * Create a Ball with these values
     */
 	public Ball(int x, int y, int size, int floor, Color color) {
-		// TODO: Not Yet Implemented
+		this.x = x;
+        this.y = y;
+        this.size = size;
+        this.floor = floor;
+        this.color = color;
+        this.yVelocity = 0;
 	}
 	
 	public boolean inside(int x, int y) {
@@ -42,16 +52,24 @@ public class Ball {
     * 
     */
 	public void move() {
-		// TODO: Not Yet Implemented
-	}
+        yVelocity -= gravity;
+        y += yVelocity;
+
+        if (y + size > floor) {
+            y -= yVelocity;
+            yVelocity *= -1;
+        }
+    }
 
     /*
     * Draws the ball using the Graphics object.
     */
 	public void draw(Graphics g) {
-		// TODO: Not Yet Implemented
+        
         // consider drawing it a random color each time to illustrate some animation
         // using AnimatedPanel::getRandColor
+        g.setColor(color);
+        g.fillOval(x, y, size, size);
 	}
 	
 }
