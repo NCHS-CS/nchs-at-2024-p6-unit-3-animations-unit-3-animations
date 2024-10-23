@@ -152,14 +152,21 @@
 		 Main.done = false;
 		 try {			
 			 while (!Main.done) {
- 
-				 panels[currentPanel].updateAnimation();
-				 // This informs the UI Thread to repaint this component
+				// We call to inform our own Abstract API that we want to update
+				// our animation state (note: we are not "allowed" to call any Swing API's
+				// here since it happens on our main thread)
+				panels[currentPanel].updateAnimation();
 
-				 SwingUtilities.invokeLater(() -> repaint());
-				 // This causes our main thread to wait... to sleep... for a bit.
-				 Thread.sleep(Main.delay);
-			 }
+                // This informs the UI Thread to repaint this component
+				// This runs on the Swing Thread instead of main thread
+				// but the following code will run immediately and go to
+				// sleep; all the while the Swing Thread will keep running
+				// and repaint, most likely while this main thread is sleeping
+				SwingUtilities.invokeLater(() ->repaint());
+
+                // This causes our main thread to wait... to sleep... for a bit,
+				// at least the right amount to run at our desired FPS.
+				Thread.sleep(Main.delay);			 }
 		 } catch (InterruptedException e) {
 			 e.printStackTrace();
 		 }
