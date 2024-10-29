@@ -127,7 +127,7 @@
 			 panel.setVisible(false);
 		 }
 		 // Set the current panel and make it visible 
-		 this.currentPanel = BALL_PANEL;
+		 this.currentPanel = SPARK_PANEL;
 		 panels[currentPanel].setVisible(true);
  
 		 // Set this JFrame to be visible
@@ -273,7 +273,7 @@
 		 // item.addActionListener( ... what goes here? ...)
 		 menu.add(item);
 		 item = new JMenuItem("Show Sparks", 'K');
-		 // item.addActionListener( ... what goes here? ...)
+		 item.addActionListener(e -> showPanel(SPARK_PANEL));
 		 menu.add(item);
 		 item = new JMenuItem("Show Fill", 'F');
 		 // item.addActionListener( ... what goes here? ...)

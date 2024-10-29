@@ -63,8 +63,14 @@ public class BallPanel extends AnimatedPanel {
         // to get around having implement all, we use the MouseAdapter class
         // and override just the one method we're interested in.
 
-        // TODO: Hook up the mousePressed event to call onMouseClicked
+        // Hook up the mousePressed event to call onMouseClicked
         // using an inline/inner anonymous class
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                onMouseClicked(me);
+            }
+        });
     }
 
     /**
@@ -74,11 +80,21 @@ public class BallPanel extends AnimatedPanel {
      * @param me The MouseEvent data structure provided by the event.
      */
     private void onMouseClicked(MouseEvent me) {
-        // TODO: get the coordinates of the click event.
-        int x = 0;
-        int y = 0;
+        // get the coordinates of the click event.
+        int x = me.getX();
+        int y = me.getY();
         System.out.printf("Mouse Clicked at (%d, %d)\n", x, y);
-        // TODO: Do something else creative with click events
+
+        // Do something else creative with click events
+        checkAndInflateBalls(x, y);
+    }
+
+    private void checkAndInflateBalls(int x, int y) {
+        for (Ball ball: balls) {
+            if (ball.inside(x, y)) {
+                ball.inflate();
+            }
+        }
     }
 
     public void moveBalls() {
@@ -99,17 +115,11 @@ public class BallPanel extends AnimatedPanel {
         // Always call our superclass implementation first
         super.paintComponent(g);
 
-        // BEFORE we work on the below TODOs, just draw stuff
-        // using the Graphics object.
-
         this.setBackground(Color.WHITE);
         g.clearRect(0, 0, this.getWidth(), this.getHeight());
         g.setColor(Color.PINK);
         g.drawLine(0, BallPanel.FLOOR, this.getWidth(), BallPanel.FLOOR);
         
-        // TODO: Use the Graphics object to clear the whole panel/canvas,
-        // set the pen color, and draw our floor
-
         for (Ball ball: balls) {
             ball.draw(g);
         }

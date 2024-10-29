@@ -40,9 +40,15 @@ public class Ball {
 	}
 	
 	public boolean inside(int x, int y) {
-		// TODO: Not Yet Implemented
-        return false;
+		int xCenter = this.x + size/2;
+        int yCenter = this.y + size/2;
+        
+        return Math.hypot(xCenter - x, yCenter - y) <= size;
 	}
+
+    public void inflate() {
+        this.size += 10;
+    }
 
     /*
     * Update the vertical velocity according to gravity
